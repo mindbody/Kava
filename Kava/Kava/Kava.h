@@ -6,7 +6,7 @@
 //  Copyright © 2016 MINDBODY, Inc. All rights reserved.
 //
 
-@import Foundation
+#import <Foundation/Foundation.h>
 
 //! Project version number for Kava.
 FOUNDATION_EXPORT double KavaVersionNumber;
