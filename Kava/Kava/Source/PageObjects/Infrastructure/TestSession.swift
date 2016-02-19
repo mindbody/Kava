@@ -15,7 +15,7 @@ public class TestSession {
     
     private(set) var currentTest: XCTestCase
     
-    init(test: XCTestCase, application: XCUIApplication? = XCUIApplication()) {
+    public init(test: XCTestCase, application: XCUIApplication? = XCUIApplication()) {
         self.application = application!
         self.currentTest = test
     }
