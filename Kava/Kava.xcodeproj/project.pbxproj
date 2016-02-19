@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B08ECDF1C77C74D00D6F3EC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B08ECDE1C77C74D00D6F3EC /* XCTest.framework */; };
 		1B995D901C767217001F8B52 /* Kava.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B995D8F1C767217001F8B52 /* Kava.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1B995D971C767217001F8B52 /* Kava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B995D8C1C767217001F8B52 /* Kava.framework */; };
 		1B995D9C1C767217001F8B52 /* KavaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B995D9B1C767217001F8B52 /* KavaTests.swift */; };
@@ -44,7 +43,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B08ECDF1C77C74D00D6F3EC /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
