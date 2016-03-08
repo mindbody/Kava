@@ -67,3 +67,25 @@ public class Tappable<TResultBlock: Block> : Element {
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
 }
+
+public class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
+    
+    public func enterText(text: String) -> TResultBlock {
+        return self.enterText(text, result: TResultBlock.self)
+    }
+    
+    public func enterText<TCustomResultBlock : Block>(text: String, result: TCustomResultBlock.Type) -> TCustomResultBlock {
+        self.backingElement?.typeText(text)
+        return self.parentBlock.scopeTo(TCustomResultBlock.self)
+    }
+    
+    public func clearText() -> TResultBlock {
+        return self.clearText(TResultBlock.self)
+    }
+    
+    public func clearText<TCustomResultBlock : Block>(result: TCustomResultBlock.Type) -> TCustomResultBlock {
+        self.backingElement?.clearText()
+        return self.parentBlock.scopeTo(TCustomResultBlock.self)
+    }
+    
+}
