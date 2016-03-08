@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B5617571C8E544000500457 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5617561C8E544000500457 /* Element.swift */; };
 		1B995D901C767217001F8B52 /* Kava.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B995D8F1C767217001F8B52 /* Kava.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1B995D971C767217001F8B52 /* Kava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B995D8C1C767217001F8B52 /* Kava.framework */; };
 		1B995D9C1C767217001F8B52 /* KavaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B995D9B1C767217001F8B52 /* KavaTests.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		1B08ECDE1C77C74D00D6F3EC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		1B5617561C8E544000500457 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		1B995D8C1C767217001F8B52 /* Kava.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kava.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B995D8F1C767217001F8B52 /* Kava.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Kava.h; sourceTree = "<group>"; };
 		1B995D911C767217001F8B52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 				1B08ECDE1C77C74D00D6F3EC /* XCTest.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B5617551C8E535600500457 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				1B5617561C8E544000500457 /* Element.swift */,
+			);
+			path = Elements;
 			sourceTree = "<group>";
 		};
 		1B995D821C767217001F8B52 = {
@@ -122,6 +132,7 @@
 		1B995DA81C7675F4001F8B52 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				1B5617551C8E535600500457 /* Elements */,
 				1B995DA91C7675F4001F8B52 /* Block.swift */,
 				1B995DAB1C7675F4001F8B52 /* TestSession.swift */,
 				1B995DAC1C7675F4001F8B52 /* Utils.swift */,
@@ -239,6 +250,7 @@
 			files = (
 				1B995DB61C7675F4001F8B52 /* TestSession.swift in Sources */,
 				1B995DB51C7675F4001F8B52 /* Block.swift in Sources */,
+				1B5617571C8E544000500457 /* Element.swift in Sources */,
 				1B995DB71C7675F4001F8B52 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

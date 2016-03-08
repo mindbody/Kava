@@ -9,11 +9,13 @@
 import Foundation
 import XCTest
 
-public protocol Block {
+public protocol HasSession {
     
     var session: TestSession { get set }
     
-    var element: XCUIElement { get set }
+}
+
+public protocol Block : HasSession {
     
     func exists() -> Bool
     
