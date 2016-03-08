@@ -9,34 +9,44 @@
 import Foundation
 import XCTest
 
-public protocol HasSession {
+public protocol Block : UITestEntity {
     
-    var session: TestSession { get set }
+    var parentBlock: Block? { get set }
     
-}
-
-public protocol Block : HasSession {
+    init(parentBlock: Block?, session: TestSession)
     
     func exists() -> Bool
     
-    func rootBlock() -> Block
-    
-    init(session: TestSession, element: XCUIElement?)
 }
 
 public extension Block {
     
     public func rootBlock() -> Block {
-        return ApplicationBlock(session: self.session)
+        if var parentBlock = self.parentBlock {
+            while(parentBlock.parentBlock != nil) {
+                parentBlock = parentBlock.parentBlock!
+            }
+            return parentBlock
+        }
+        return ApplicationBlock(parentBlock: nil, session: self.session)
     }
     
+    public func scopeTo<TResultBlock : Block>(blockType: TResultBlock.Type, builder: (() -> TResultBlock)? = nil ) -> TResultBlock {
+        if let blockBuilder = builder {
+            return blockBuilder()
+        }
+        return TResultBlock(parentBlock: nil, session: self.session)
+    }
 }
 
 public final class ApplicationBlock : Block {
     
-    public init(session: TestSession, element: XCUIElement? = nil) {
+    public private(set) var session: TestSession
+    public var parentBlock: Block?
+    
+    public init(parentBlock: Block?, session: TestSession) {
         self.session = session
-        self.element = element ?? XCUIApplication()
+        self.parentBlock = parentBlock
     }
     
     public func exists() -> Bool {
@@ -47,21 +57,20 @@ public final class ApplicationBlock : Block {
         return self
     }
     
-    public var session: TestSession
-    
-    public var element: XCUIElement
-    
 }
 
 public class PageBlock : Block {
     
-    public required init(session: TestSession, element: XCUIElement? = nil) {
+    public private(set) var session: TestSession
+    public var parentBlock: Block?
+    
+    public required init(parentBlock: Block?, session: TestSession) {
         self.session = session
-        self.element = element ?? session.application
+        self.parentBlock = parentBlock
     }
     
     public required convenience init(block: Block) {
-        self.init(session: block.session, element: block.element)
+        self.init(parentBlock: block.parentBlock, session: block.session)
     }
     
     public func exists() -> Bool {
@@ -71,9 +80,5 @@ public class PageBlock : Block {
     public func dismissKeyboard() -> Self {
         return self
     }
-    
-    public var session: TestSession
-    
-    public var element: XCUIElement
     
 }
