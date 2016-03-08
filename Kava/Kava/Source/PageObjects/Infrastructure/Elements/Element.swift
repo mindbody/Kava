@@ -21,7 +21,7 @@ public class Element : UITestEntity {
     public private(set) var session: TestSession
     public private(set) var parentBlock: Block
     
-    public init(parentBlock: Block, backingElement: XCUIElement?) {
+    public required init(parentBlock: Block, backingElement: XCUIElement?) {
         self.session = parentBlock.session
         self.parentBlock = parentBlock
         self.backingElement = backingElement
@@ -30,6 +30,10 @@ public class Element : UITestEntity {
 }
 
 public class Tappable<TResultBlock: Block> : Element {
+    
+    public required init(parentBlock: Block, backingElement: XCUIElement?) {
+        super.init(parentBlock: parentBlock, backingElement: backingElement)
+    }
     
     public func tap() -> TResultBlock {
         return self.tap(TResultBlock.self)
@@ -69,6 +73,10 @@ public class Tappable<TResultBlock: Block> : Element {
 }
 
 public class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
+    
+    public required init(parentBlock: Block, backingElement: XCUIElement?) {
+        super.init(parentBlock: parentBlock, backingElement: backingElement)
+    }
     
     public func enterText(text: String) -> TResultBlock {
         return self.enterText(text, result: TResultBlock.self)
