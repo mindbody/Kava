@@ -47,9 +47,9 @@ public extension XCTestCase {
     
 }
 
-public extension XCUIElement {
+internal extension XCUIElement {
     
-    public func clearText() -> Void {
+    func clearText() -> Void {
         guard let currentText = self.value as? String else {
             XCTFail("Cannot clear text on an element that doesn't contain text")
             return
