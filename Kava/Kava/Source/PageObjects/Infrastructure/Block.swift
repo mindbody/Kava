@@ -42,6 +42,7 @@ public extension Block {
 public final class ApplicationBlock : Block {
     
     public private(set) var session: TestSession
+    public let backingElement: XCUIElement = XCUIApplication()
     public var parentBlock: Block?
     
     public init(parentBlock: Block?, session: TestSession) {
@@ -62,6 +63,7 @@ public final class ApplicationBlock : Block {
 public class PageBlock : Block {
     
     public private(set) var session: TestSession
+    public var backingElement: XCUIElement = XCUIApplication()
     public var parentBlock: Block?
     
     public required init(parentBlock: Block?, session: TestSession) {

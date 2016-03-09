@@ -13,15 +13,17 @@ public protocol UITestEntity {
     
     var session: TestSession { get }
     
+    var backingElement: XCUIElement { get }
+
 }
 
 public class Element : UITestEntity {
     
-    public private(set) var backingElement: XCUIElement?
+    public private(set) var backingElement: XCUIElement
     public private(set) var session: TestSession
     public private(set) var parentBlock: Block
     
-    public required init(parentBlock: Block, backingElement: XCUIElement?) {
+    public required init(parentBlock: Block, backingElement: XCUIElement) {
         self.session = parentBlock.session
         self.parentBlock = parentBlock
         self.backingElement = backingElement
@@ -31,7 +33,7 @@ public class Element : UITestEntity {
 
 public class Tappable<TResultBlock: Block> : Element {
     
-    public required init(parentBlock: Block, backingElement: XCUIElement?) {
+    public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
     
@@ -40,7 +42,7 @@ public class Tappable<TResultBlock: Block> : Element {
     }
     
     public func tap<TCustomResultBlock : Block>(result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.tap()
+        self.backingElement.tap()
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
     
@@ -49,7 +51,7 @@ public class Tappable<TResultBlock: Block> : Element {
     }
     
     public func doubleTap<TCustomResultBlock : Block>(result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.doubleTap()
+        self.backingElement.doubleTap()
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
     
@@ -58,7 +60,7 @@ public class Tappable<TResultBlock: Block> : Element {
     }
     
     public func tapWithNumberOfTaps<TCustomResultBlock : Block>(numberOfTaps: UInt, numberOfTouches: UInt, result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.tapWithNumberOfTaps(numberOfTaps, numberOfTouches: numberOfTouches)
+        self.backingElement.tapWithNumberOfTaps(numberOfTaps, numberOfTouches: numberOfTouches)
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
     
@@ -67,14 +69,14 @@ public class Tappable<TResultBlock: Block> : Element {
     }
     
     public func pressForDuration<TCustomResultBlock : Block>(duration: NSTimeInterval, result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.pressForDuration(duration);
+        self.backingElement.pressForDuration(duration);
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
 }
 
 public class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
     
-    public required init(parentBlock: Block, backingElement: XCUIElement?) {
+    public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
     
@@ -83,7 +85,7 @@ public class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
     }
     
     public func enterText<TCustomResultBlock : Block>(text: String, result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.typeText(text)
+        self.backingElement.typeText(text)
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
     
@@ -92,7 +94,7 @@ public class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
     }
     
     public func clearText<TCustomResultBlock : Block>(result: TCustomResultBlock.Type) -> TCustomResultBlock {
-        self.backingElement?.clearText()
+        self.backingElement.clearText()
         return self.parentBlock.scopeTo(TCustomResultBlock.self)
     }
     
