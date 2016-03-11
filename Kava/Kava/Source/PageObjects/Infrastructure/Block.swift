@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-public protocol Block : UITestEntity {
+public protocol Block : class, UITestEntity {
     
     var parentBlock: Block? { get set }
     
@@ -17,9 +17,13 @@ public protocol Block : UITestEntity {
     
     func exists() -> Bool
     
+    func device() -> Device
+    
 }
 
 public extension Block {
+    
+    //MARK: Default implementations
     
     public func rootBlock() -> Block {
         if var parentBlock = self.parentBlock {
@@ -36,6 +40,26 @@ public extension Block {
             return blockBuilder()
         }
         return TResultBlock(parentBlock: nil, session: self.session)
+    }
+    
+    public func device() -> Device {
+        return Device.sharedDevice
+    }
+    
+    //MARK: Helpers
+    
+    public func waitForPredicate(predicate: NSPredicate, timeout: NSTimeInterval) -> Self {
+        self.session.currentTest.waitForPredicate(predicate, timeout: timeout)
+        return self
+    }
+    
+    public func waitForBlock(block: ((Self) -> (Bool)), timeout: NSTimeInterval) -> Self {
+        let predicate = NSPredicate { [weak self] (_, _) -> Bool in
+            return withExtendedLifetime(self) {
+                return block(self!)
+            }
+        }
+        return self.waitForPredicate(predicate, timeout: timeout)
     }
 }
 
