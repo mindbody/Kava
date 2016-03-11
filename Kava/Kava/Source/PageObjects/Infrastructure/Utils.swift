@@ -56,7 +56,10 @@ internal extension XCUIElement {
         }
         
         let deleteString = currentText.characters.map { _ in "\u{8}" }.joinWithSeparator("")
-        self.typeText(deleteString)
+        
+        if (deleteString.characters.count > 0) {
+            self.typeText(deleteString)
+        }
     }
     
 }
