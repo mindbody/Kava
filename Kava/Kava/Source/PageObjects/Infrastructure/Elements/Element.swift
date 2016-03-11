@@ -29,4 +29,8 @@ public class Element : UITestEntity {
         self.backingElement = backingElement
     }
     
+    public func exists() -> Bool {
+        return self.backingElement.exists
+    }
+    
 }
