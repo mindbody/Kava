@@ -9,6 +9,9 @@
 import Foundation
 import XCTest
 
+/**
+ A wrapper for XCUIDevice
+*/
 public final class Device {
     
     public static let sharedDevice = Device()

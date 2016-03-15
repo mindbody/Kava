@@ -9,6 +9,10 @@
 import Foundation
 import XCTest
 
+/**
+ Represents the current test case. UI test entities cannot exist
+ without a running TestSession.
+*/
 public class TestSession {
     
     public private(set) var application: XCUIApplication;
