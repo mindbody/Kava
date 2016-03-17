@@ -47,16 +47,19 @@ public extension XCTestCase {
     
 }
 
-public extension XCUIElement {
+internal extension XCUIElement {
     
-    public func clearText() -> Void {
+    func clearText() -> Void {
         guard let currentText = self.value as? String else {
             XCTFail("Cannot clear text on an element that doesn't contain text")
             return
         }
         
         let deleteString = currentText.characters.map { _ in "\u{8}" }.joinWithSeparator("")
-        self.typeText(deleteString)
+        
+        if (deleteString.characters.count > 0) {
+            self.typeText(deleteString)
+        }
     }
     
 }
