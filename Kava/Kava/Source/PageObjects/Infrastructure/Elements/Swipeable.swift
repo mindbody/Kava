@@ -51,6 +51,11 @@ public class Swipeable<TResultBlock: Block> : Draggable<TResultBlock> {
     }
     
     public func swipeLeft<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+        // Commenting the below out for now as long as isInRelationship == true
+        
+//        // This should never happen -- you /always/ swipe right
+//        fatalError("Why?")
+        
         self.backingElement.swipeLeft()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
