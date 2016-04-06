@@ -56,7 +56,7 @@ public class CollectionView<TResultBlock : Block> : Element {
     }
     
     public func scrollForwardUntil<TCustomResultBlock : Block>(predicate: NSPredicate, timeout: NSTimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        let scrollForwardFunction = self.scrollDirection == .Vertical ? self.backingElement.swipeDown : self.backingElement.swipeRight
+        let scrollForwardFunction = self.scrollDirection == .Vertical ? self.backingElement.swipeUp : self.backingElement.swipeRight
         return self.scrollWithFunc(scrollForwardFunction, predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
     
@@ -76,7 +76,7 @@ public class CollectionView<TResultBlock : Block> : Element {
     }
     
     public func scrollBackwardsUntil<TCustomResultBlock : Block>(predicate: NSPredicate, timeout: NSTimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        let scrollForwardFunction = self.scrollDirection == .Vertical ? self.backingElement.swipeUp : self.backingElement.swipeLeft
+        let scrollForwardFunction = self.scrollDirection == .Vertical ? self.backingElement.swipeDown : self.backingElement.swipeLeft
         return self.scrollWithFunc(scrollForwardFunction, predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
     
