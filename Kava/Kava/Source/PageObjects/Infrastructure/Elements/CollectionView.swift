@@ -45,7 +45,7 @@ public class CollectionView<TResultBlock : Block> : Element {
     
     private func scrollWithFunc<TCustomResultBlock : Block>(scrollFunction: (() -> Void), predicate: NSPredicate, timeout: NSTimeInterval, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         let endTimestamp = NSDate.timeIntervalSinceReferenceDate() + timeout
-        while(predicate.evaluateWithObject(nil) && NSDate.timeIntervalSinceReferenceDate() < endTimestamp) {
+        while(!predicate.evaluateWithObject(nil) && NSDate.timeIntervalSinceReferenceDate() < endTimestamp) {
             scrollFunction()
         }
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
