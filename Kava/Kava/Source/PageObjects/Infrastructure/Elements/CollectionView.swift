@@ -61,7 +61,7 @@ public class CollectionView<TResultBlock : Block> : Element {
     }
     
     public func scrollForwardUntil(block: (() -> Bool), timeout: NSTimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.scrollForwardUntil(block, timeout: timeout, constructingBlock: builder)
+        return self.scrollForwardUntil(block, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
     }
     
     public func scrollForwardUntil<TCustomResultBlock : Block>(block: (() -> Bool), timeout: NSTimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
