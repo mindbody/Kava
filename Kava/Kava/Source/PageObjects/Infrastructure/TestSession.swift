@@ -15,9 +15,9 @@ import XCTest
 */
 open class TestSession {
     
-    open fileprivate(set) var application: XCUIApplication;
+    open private(set) var application: XCUIApplication;
     
-    open fileprivate(set) var currentTest: XCTestCase
+    open private(set) var currentTest: XCTestCase
     
     public init(test: XCTestCase, application: XCUIApplication? = XCUIApplication()) {
         self.application = application!

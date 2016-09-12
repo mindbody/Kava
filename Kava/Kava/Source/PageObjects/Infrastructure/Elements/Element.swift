@@ -25,16 +25,16 @@ public protocol UITestEntity {
  A UI entity that defines a single element on a screen, which wraps behavior
  in an XCUIElement.
 */
-open class Element : UITestEntity {
+public class Element : UITestEntity {
     
     // The wrapped XCUIElement
-    open let backingElement: XCUIElement
+    public let backingElement: XCUIElement
     
     // The current test session. XCUIElements cannot exist without a running XCTest.
-    open let session: TestSession
+    public let session: TestSession
     
     // The block in which the element lives, which could simply be an ApplicationBlock
-    open let parentBlock: Block
+    public let parentBlock: Block
     
     /**
      Designated initializer. This creates a new Element that wraps an XCUIElement, 

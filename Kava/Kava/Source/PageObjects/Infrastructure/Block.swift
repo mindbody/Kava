@@ -91,7 +91,7 @@ public extension Block {
 */
 public final class ApplicationBlock : Block {
     
-    public fileprivate(set) var session: TestSession
+    public private(set) var session: TestSession
     public let backingElement: XCUIElement = XCUIApplication()
     public var parentBlock: Block?
     
@@ -115,7 +115,7 @@ public final class ApplicationBlock : Block {
 */
 open class PageBlock : Block {
     
-    open fileprivate(set) var session: TestSession
+    public private(set) var session: TestSession
     open var backingElement: XCUIElement = XCUIApplication()
     open var parentBlock: Block?
     
