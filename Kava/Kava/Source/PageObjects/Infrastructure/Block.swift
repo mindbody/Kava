@@ -42,7 +42,7 @@ public extension Block {
      @param blockType The type of block to rescope to
      @param builder The provided block construction, or a default construction wrapping the application if none is provided
     */
-    public func scopeTo<TResultBlock : Block>(blockType: TResultBlock.Type, builder: (() -> TResultBlock)? = nil ) -> TResultBlock {
+    public func scopeTo<TResultBlock : Block>(_ blockType: TResultBlock.Type, builder: (() -> TResultBlock)? = nil ) -> TResultBlock {
         if let blockBuilder = builder {
             return blockBuilder()
         }
@@ -57,7 +57,7 @@ public extension Block {
      @param predicate The predicate to be tested against
      @param timeout The timeout before forcing an expectation failure
     */
-    public func waitForPredicate(predicate: NSPredicate, timeout: NSTimeInterval) -> Self {
+    public func waitForPredicate(_ predicate: NSPredicate, timeout: TimeInterval) -> Self {
         self.session.currentTest.waitForPredicate(predicate, timeout: timeout)
         return self
     }
@@ -68,7 +68,7 @@ public extension Block {
      @param block The block predicate to be tested against
      @param timeout The timeout before forcing an expectation failure
      */
-    public func waitForBlock(block: ((Self) -> Bool), timeout: NSTimeInterval) -> Self {
+    public func waitForBlock(_ block: @escaping ((Self) -> Bool), timeout: TimeInterval) -> Self {
         let predicate = NSPredicate { [weak self] (_, _) -> Bool in
             return withExtendedLifetime(self) {
                 return block(self!)
@@ -80,7 +80,7 @@ public extension Block {
     /**
      Helper for modifying system environment settings (device orientation, pressing system buttons, etc.)
     */
-    public func modifyDeviceEnvironment(block: ((Device) -> ())) -> Self {
+    public func modifyDeviceEnvironment(_ block: ((Device) -> ())) -> Self {
         block(Device.sharedDevice)
         return self
     }
@@ -113,11 +113,11 @@ public final class ApplicationBlock : Block {
 /**
  A concrete block that represents a "page", usually correlating to a view controller
 */
-public class PageBlock : Block {
+open class PageBlock : Block {
     
     public private(set) var session: TestSession
-    public var backingElement: XCUIElement = XCUIApplication()
-    public var parentBlock: Block?
+    open var backingElement: XCUIElement = XCUIApplication()
+    open var parentBlock: Block?
     
     public required init(parentBlock: Block?, session: TestSession) {
         self.session = session
@@ -128,11 +128,11 @@ public class PageBlock : Block {
         self.init(parentBlock: block.parentBlock, session: block.session)
     }
     
-    public func exists() -> Bool {
+    open func exists() -> Bool {
         fatalError("Must override")
     }
     
-    public func dismissKeyboard() -> Self {
+    open func dismissKeyboard() -> Self {
         return self
     }
     
