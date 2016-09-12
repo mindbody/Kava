@@ -13,26 +13,26 @@ import XCTest
  A pannable element. The provided generic argument allows us to infer
  the proceeding block, defaulted to scope of the application
  */
-public class Pannable<TResultBlock: Block> : Swipeable<TResultBlock> {
+open class Pannable<TResultBlock: Block> : Swipeable<TResultBlock> {
     
     public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
     
-    public func pinchWithScale(scale: CGFloat, velocity: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+    open func pinchWithScale(_ scale: CGFloat, velocity: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
         return self.pinchWithScale(scale, velocity: velocity, result: TResultBlock.self, constructingBlock: builder)
     }
     
-    public func pinchWithScale<TCustomResultBlock : Block>(scale: CGFloat, velocity: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        self.backingElement.pinchWithScale(scale, velocity: velocity)
+    open func pinchWithScale<TCustomResultBlock : Block>(_ scale: CGFloat, velocity: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+        self.backingElement.pinch(withScale: scale, velocity: velocity)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
     
-    public func rotate(rotation: CGFloat, withVelocity velocity: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+    open func rotate(_ rotation: CGFloat, withVelocity velocity: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
         return self.rotate(rotation, withVelocity: velocity, result: TResultBlock.self, constructingBlock: builder)
     }
     
-    public func rotate<TCustomResultBlock : Block>(rotation: CGFloat, withVelocity velocity: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+    open func rotate<TCustomResultBlock : Block>(_ rotation: CGFloat, withVelocity velocity: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.rotate(rotation, withVelocity: velocity)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }

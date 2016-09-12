@@ -13,7 +13,7 @@ import XCTest
  A picker wheel within a Picker. The provided generic argument allows us to infer
  the proceeding block, defaulted to scope of the application
  */
-public class PickerWheel<TResultBlock : Block> : Element {
+open class PickerWheel<TResultBlock : Block> : Element {
     
     public typealias TResultBlockBuilder = (() -> TResultBlock)?
     
@@ -21,12 +21,12 @@ public class PickerWheel<TResultBlock : Block> : Element {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
     
-    public func adjustToPickerWheelValue(value: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+    open func adjustToPickerWheelValue(_ value: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
         return self.adjustToPickerWheelValue(value, result: TResultBlock.self, constructingBlock: builder)
     }
     
-    public func adjustToPickerWheelValue<TCustomResultBlock : Block>(value: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        self.backingElement.adjustToPickerWheelValue(value)
+    open func adjustToPickerWheelValue<TCustomResultBlock : Block>(_ value: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+        self.backingElement.adjust(toPickerWheelValue: value)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
     
@@ -36,9 +36,9 @@ public class PickerWheel<TResultBlock : Block> : Element {
  A standard picker or date picker. The provided generic argument allows us to infer
  the proceeding block, defaulted to scope of the application
  */
-public class Picker<TResultBlock : Block> : Element {
+open class Picker<TResultBlock : Block> : Element {
     
-    public lazy var pickerWheels: [PickerWheel<TResultBlock>] = {
+    open lazy var pickerWheels: [PickerWheel<TResultBlock>] = {
         self.backingElement.pickers.allElementsBoundByIndex.map {
             return PickerWheel<TResultBlock>(parentBlock: self.parentBlock, backingElement: $0)
         }

@@ -13,7 +13,7 @@ import XCTest
  An iOS slider. The provided generic argument allows us to infer
  the proceeding block, defaulted to scope of the application
  */
-public class Slider<TResultBlock : Block> : Element {
+open class Slider<TResultBlock : Block> : Element {
     
     public typealias TResultBlockBuilder = (() -> TResultBlock)?
     
@@ -21,18 +21,18 @@ public class Slider<TResultBlock : Block> : Element {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
     
-    public var normalizedSliderPosition: CGFloat {
+    open var normalizedSliderPosition: CGFloat {
         get {
             return self.backingElement.normalizedSliderPosition
         }
     }
     
-    public func adjustToNormalizedSliderPosition(normalizedSliderPosition: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+    open func adjustToNormalizedSliderPosition(_ normalizedSliderPosition: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
         return self.adjustToNormalizedSliderPosition(normalizedSliderPosition, result: TResultBlock.self, constructingBlock: builder)
     }
     
-    public func adjustToNormalizedSliderPosition<TCustomResultBlock : Block>(normalizedSliderPosition: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        self.backingElement.adjustToNormalizedSliderPosition(normalizedSliderPosition)
+    open func adjustToNormalizedSliderPosition<TCustomResultBlock : Block>(_ normalizedSliderPosition: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+        self.backingElement.adjust(toNormalizedSliderPosition: normalizedSliderPosition)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
 }
