@@ -25,7 +25,7 @@ public protocol UITestEntity {
  A UI entity that defines a single element on a screen, which wraps behavior
  in an XCUIElement.
 */
-public class Element : UITestEntity {
+open class Element : UITestEntity {
     
     // The wrapped XCUIElement
     public let backingElement: XCUIElement
