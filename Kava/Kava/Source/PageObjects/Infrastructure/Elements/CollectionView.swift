@@ -65,7 +65,7 @@ open class CollectionView<TResultBlock : Block> : Element {
     }
     
     open func scrollForwardUntil<TCustomResultBlock : Block>(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        let predicate = NSPredicate { (_: Any, _: [String : Any]?) -> Bool in
+        let predicate = NSPredicate { _ in
             return block()
         }
         return self.scrollForwardUntil(predicate, timeout: timeout, result: result, constructingBlock: builder)
@@ -85,7 +85,7 @@ open class CollectionView<TResultBlock : Block> : Element {
     }
     
     open func scrollBackwardsUntil<TCustomResultBlock : Block>(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        let predicate = NSPredicate { (_: Any, _: [String : Any]?) -> Bool in
+        let predicate = NSPredicate { _ in
             return block()
         }
         return self.scrollBackwardsUntil(predicate, timeout: timeout, result: result, constructingBlock: builder)
