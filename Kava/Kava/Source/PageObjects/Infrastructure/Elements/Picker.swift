@@ -20,12 +20,14 @@ open class PickerWheel<TResultBlock : Block> : Element {
     public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
-    
-    open func adjustToPickerWheelValue(_ value: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.adjustToPickerWheelValue(value, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func adjust(toValue value: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.adjust(toValue: value, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func adjustToPickerWheelValue<TCustomResultBlock : Block>(_ value: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func adjust<TCustomResultBlock : Block>(toValue value: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.adjust(toPickerWheelValue: value)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
@@ -38,7 +40,7 @@ open class PickerWheel<TResultBlock : Block> : Element {
  */
 open class Picker<TResultBlock : Block> : Element {
     
-    open lazy var pickerWheels: [PickerWheel<TResultBlock>] = {
+    open lazy var wheels: [PickerWheel<TResultBlock>] = {
         self.backingElement.pickers.allElementsBoundByIndex.map {
             return PickerWheel<TResultBlock>(parentBlock: self.parentBlock, backingElement: $0)
         }

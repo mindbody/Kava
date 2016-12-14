@@ -14,7 +14,7 @@ import XCTest
 */
 public final class Device {
     
-    public static let sharedDevice = Device()
+    public static let shared = Device()
     
     fileprivate let device = XCUIDevice.shared()
     
@@ -28,13 +28,9 @@ public final class Device {
     }
     
     fileprivate init() {}
-    
-    public func setOrientation(_ orientation: UIDeviceOrientation) -> Self {
-        self.orientation = orientation
-        return self
-    }
-    
-    public func pressButton(_ button: XCUIDeviceButton) -> Self {
+
+    @discardableResult
+    public func press(button: XCUIDeviceButton) -> Self {
         self.device.press(button)
         return self
     }

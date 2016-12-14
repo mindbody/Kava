@@ -16,10 +16,10 @@ import XCTest
 public protocol Block : class, UITestEntity {
     
     var parentBlock: Block? { get set }
+
+    var exists: Bool { get }
     
     init(parentBlock: Block?, session: TestSession)
-    
-    func exists() -> Bool
     
 }
 
@@ -27,7 +27,7 @@ public extension Block {
     
     //MARK: Default implementations
     
-    public func rootBlock() -> Block {
+    public var root: Block {
         if var parentBlock = self.parentBlock {
             while(parentBlock.parentBlock != nil) {
                 parentBlock = parentBlock.parentBlock!
@@ -42,6 +42,7 @@ public extension Block {
      @param blockType The type of block to rescope to
      @param builder The provided block construction, or a default construction wrapping the application if none is provided
     */
+    @discardableResult
     public func scopeTo<TResultBlock : Block>(_ blockType: TResultBlock.Type, builder: (() -> TResultBlock)? = nil ) -> TResultBlock {
         if let blockBuilder = builder {
             return blockBuilder()
@@ -57,8 +58,9 @@ public extension Block {
      @param predicate The predicate to be tested against
      @param timeout The timeout before forcing an expectation failure
     */
-    public func waitForPredicate(_ predicate: NSPredicate, timeout: TimeInterval) -> Self {
-        self.session.currentTest.waitForPredicate(predicate, timeout: timeout)
+    @discardableResult
+    public func wait(timeout: TimeInterval, predicate: NSPredicate) -> Self {
+        self.session.currentTest.wait(forPredicate: predicate, timeout: timeout)
         return self
     }
     
@@ -68,20 +70,22 @@ public extension Block {
      @param block The block predicate to be tested against
      @param timeout The timeout before forcing an expectation failure
      */
-    public func waitForBlock(_ block: @escaping ((Self) -> Bool), timeout: TimeInterval) -> Self {
+    @discardableResult
+    public func wait(timeout: TimeInterval, closure: @escaping ((Self) -> Bool)) -> Self {
         let predicate = NSPredicate { [weak self] (_, _) -> Bool in
             return withExtendedLifetime(self) {
-                return block(self!)
+                return closure(self!)
             }
         }
-        return self.waitForPredicate(predicate, timeout: timeout)
+        return self.wait(timeout: timeout, predicate: predicate)
     }
     
     /**
      Helper for modifying system environment settings (device orientation, pressing system buttons, etc.)
     */
-    public func modifyDeviceEnvironment(_ block: ((Device) -> ())) -> Self {
-        block(Device.sharedDevice)
+    @discardableResult
+    public func modifyDeviceEnvironment(closure: ((Device) -> ())) -> Self {
+        closure(Device.shared)
         return self
     }
 }
@@ -90,7 +94,7 @@ public extension Block {
  A concrete block that defines the root of any block hierarchy, wrapping the singleton XCUIApplication
 */
 public final class ApplicationBlock : Block {
-    
+
     public private(set) var session: TestSession
     public let backingElement: XCUIElement = XCUIApplication()
     public var parentBlock: Block?
@@ -100,9 +104,7 @@ public final class ApplicationBlock : Block {
         self.parentBlock = nil // The application is the absolute root
     }
     
-    public func exists() -> Bool {
-        return true
-    }
+    public var exists: Bool = true
     
     public func rootBlock() -> Block {
         return self
@@ -128,9 +130,7 @@ open class PageBlock : Block {
         self.init(parentBlock: block.parentBlock, session: block.session)
     }
     
-    open func exists() -> Bool {
-        fatalError("Must override")
-    }
+    open var exists: Bool = false
     
     open func dismissKeyboard() -> Self {
         return self

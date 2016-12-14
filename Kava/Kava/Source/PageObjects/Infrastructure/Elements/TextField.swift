@@ -18,21 +18,25 @@ open class TextField<TResultBlock: Block> : Tappable<TResultBlock> {
     public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
-    
-    open func enterText(_ text: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.enterText(text, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func type(text: String, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.type(text: text, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func enterText<TCustomResultBlock : Block>(_ text: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func type<TCustomResultBlock : Block>(text: String, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.typeText(text)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
-    
+
+    @discardableResult
     open func clearText(constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.clearText(TResultBlock.self, constructingBlock: builder)
+        return self.clearText(result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func clearText<TCustomResultBlock : Block>(_ result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func clearText<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.clearText()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }

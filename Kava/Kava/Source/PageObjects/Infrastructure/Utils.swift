@@ -11,7 +11,7 @@ import XCTest
 
 public extension XCTestCase {
     
-    public func waitForPredicate(_ predicate: NSPredicate, evaluatedWithObject object: AnyObject? = nil, timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) {
+    public func wait(forPredicate predicate: NSPredicate, evaluatedWith object: Any? = nil, timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) {
         // If no object is provided, the expectation predicate still
         // needs an object to be evaluated against, even if not used
         let objectToEvaluate = object ?? self
@@ -21,16 +21,16 @@ public extension XCTestCase {
         self.waitForExpectations(timeout: timeout, handler: handler)
     }
     
-    public func waitForBlockToDisappear<T>(_ block: T, withTimeout timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) where T:Block, T:AnyObject {
+    public func waitForBlockToDisappear<T>(_ block: T, timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) where T:Block, T:AnyObject {
         let blockExistsPredicate = NSPredicate { (evaluatedObject, bindings) -> Bool in
             guard let evaluatedBlock = evaluatedObject as? T else {
                 XCTFail()
                 return false
             }
-            return !evaluatedBlock.exists()
+            return !evaluatedBlock.exists
         }
         
-        self.waitForPredicate(blockExistsPredicate, evaluatedWithObject: block, timeout: timeout, handler: handler)
+        self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout, handler: handler)
     }
     
     public func waitForBlockToExist<T>(_ block: T, withTimeout timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) where T:Block, T:AnyObject {
@@ -39,10 +39,10 @@ public extension XCTestCase {
                 XCTFail()
                 return false
             }
-            return evaluatedBlock.exists()
+            return evaluatedBlock.exists
         }
         
-        self.waitForPredicate(blockExistsPredicate, evaluatedWithObject: block, timeout: timeout, handler: handler)
+        self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout, handler: handler)
     }
     
 }

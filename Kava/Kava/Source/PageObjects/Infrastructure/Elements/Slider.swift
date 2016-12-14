@@ -26,12 +26,14 @@ open class Slider<TResultBlock : Block> : Element {
             return self.backingElement.normalizedSliderPosition
         }
     }
-    
-    open func adjustToNormalizedSliderPosition(_ normalizedSliderPosition: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.adjustToNormalizedSliderPosition(normalizedSliderPosition, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func adjust(toNormalizedSliderPosition normalizedSliderPosition: CGFloat, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.adjust(toNormalizedSliderPosition: normalizedSliderPosition, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func adjustToNormalizedSliderPosition<TCustomResultBlock : Block>(_ normalizedSliderPosition: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func adjust<TCustomResultBlock : Block>(toNormalizedSliderPosition normalizedSliderPosition: CGFloat, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.adjust(toNormalizedSliderPosition: normalizedSliderPosition)
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }

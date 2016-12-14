@@ -18,39 +18,47 @@ open class Swipeable<TResultBlock: Block> : Draggable<TResultBlock> {
     public required init(parentBlock: Block, backingElement: XCUIElement) {
         super.init(parentBlock: parentBlock, backingElement: backingElement)
     }
-    
+
+    @discardableResult
     open func swipeUp(constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.swipeUp(TResultBlock.self, constructingBlock: builder)
+        return self.swipeUp(result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func swipeUp<TCustomResultBlock : Block>(_ result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func swipeUp<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.swipeUp()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
-    
+
+    @discardableResult
     open func swipeRight(constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.swipeRight(TResultBlock.self, constructingBlock: builder)
+        return self.swipeRight(result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func swipeRight<TCustomResultBlock : Block>(_ result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func swipeRight<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.swipeRight()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
-    
+
+    @discardableResult
     open func swipeDown(constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.swipeDown(TResultBlock.self, constructingBlock: builder)
+        return self.swipeDown(result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func swipeDown<TCustomResultBlock : Block>(_ result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func swipeDown<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.swipeDown()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
-    
+
+    @discardableResult
     open func swipeLeft(constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.swipeLeft(TResultBlock.self, constructingBlock: builder)
+        return self.swipeLeft(result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func swipeLeft<TCustomResultBlock : Block>(_ result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func swipeLeft<TCustomResultBlock : Block>(result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         self.backingElement.swipeLeft()
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }

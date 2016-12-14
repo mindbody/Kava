@@ -50,45 +50,53 @@ open class CollectionView<TResultBlock : Block> : Element {
         }
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
-    
-    open func scrollForwardUntil(_ predicate: NSPredicate, timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.scrollForwardUntil(predicate, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func scrollForwardUntil(predicate: NSPredicate, timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.scrollForwardUntil(predicate: predicate, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func scrollForwardUntil<TCustomResultBlock : Block>(_ predicate: NSPredicate, timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func scrollForwardUntil<TCustomResultBlock : Block>(predicate: NSPredicate, timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         let scrollForwardFunction = self.scrollDirection == .vertical ? self.backingElement.swipeUp : self.backingElement.swipeRight
         return self.scrollWithFunc(scrollForwardFunction, predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
-    
-    open func scrollForwardUntil(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.scrollForwardUntil(block, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func scrollForwardUntil(_ predicateBlock: @escaping (() -> Bool), timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.scrollForwardUntil(predicateBlock, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func scrollForwardUntil<TCustomResultBlock : Block>(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func scrollForwardUntil<TCustomResultBlock : Block>(_ predicateBlock: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         let predicate = NSPredicate { _ in
-            return block()
+            return predicateBlock()
         }
-        return self.scrollForwardUntil(predicate, timeout: timeout, result: result, constructingBlock: builder)
+        return self.scrollForwardUntil(predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
-    
-    open func scrollBackwardsUntil(_ predicate: NSPredicate, timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.scrollBackwardsUntil(predicate, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func scrollBackwardsUntil(predicate: NSPredicate, timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.scrollBackwardsUntil(predicate: predicate, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func scrollBackwardsUntil<TCustomResultBlock : Block>(_ predicate: NSPredicate, timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func scrollBackwardsUntil<TCustomResultBlock : Block>(predicate: NSPredicate, timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         let scrollForwardFunction = self.scrollDirection == .vertical ? self.backingElement.swipeDown : self.backingElement.swipeLeft
         return self.scrollWithFunc(scrollForwardFunction, predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
-    
-    open func scrollBackwardsUntil(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
-        return self.scrollBackwardsUntil(block, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
+
+    @discardableResult
+    open func scrollBackwardsUntil(_ predicateBlock: @escaping (() -> Bool), timeout: TimeInterval = 5, constructingBlock builder: TResultBlockBuilder = nil) -> TResultBlock {
+        return self.scrollBackwardsUntil(predicateBlock, timeout: timeout, result: TResultBlock.self, constructingBlock: builder)
     }
-    
-    open func scrollBackwardsUntil<TCustomResultBlock : Block>(_ block: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
+
+    @discardableResult
+    open func scrollBackwardsUntil<TCustomResultBlock : Block>(_ predicateBlock: @escaping (() -> Bool), timeout: TimeInterval = 5, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
         let predicate = NSPredicate { _ in
-            return block()
+            return predicateBlock()
         }
-        return self.scrollBackwardsUntil(predicate, timeout: timeout, result: result, constructingBlock: builder)
+        return self.scrollBackwardsUntil(predicate: predicate, timeout: timeout, result: result, constructingBlock: builder)
     }
     
 }
