@@ -104,7 +104,9 @@ public final class ApplicationBlock : Block {
         self.parentBlock = nil // The application is the absolute root
     }
     
-    public var exists: Bool = true
+    public var exists: Bool {
+        return true
+    }
     
     public func rootBlock() -> Block {
         return self
@@ -130,7 +132,9 @@ open class PageBlock : Block {
         self.init(parentBlock: block.parentBlock, session: block.session)
     }
     
-    open var exists: Bool = false
+    open var exists: Bool {
+        return false
+    }
     
     open func dismissKeyboard() -> Self {
         return self
