@@ -50,7 +50,7 @@ open class Tappable<TResultBlock: Block> : Element {
 
     @discardableResult
     open func tap<TCustomResultBlock : Block>(withNumberOfTaps numberOfTaps: UInt, numberOfTouches: UInt, result: TCustomResultBlock.Type, constructingBlock builder: (() -> TCustomResultBlock)? = nil) -> TCustomResultBlock {
-        self.backingElement.tap(withNumberOfTaps: numberOfTaps, numberOfTouches: numberOfTouches)
+        self.backingElement.tap(withNumberOfTaps: Int(numberOfTaps), numberOfTouches: Int(numberOfTouches))
         return self.parentBlock.scopeTo(TCustomResultBlock.self, builder: builder)
     }
 
