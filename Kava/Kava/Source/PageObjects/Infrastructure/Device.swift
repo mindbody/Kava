@@ -16,7 +16,7 @@ public final class Device {
     
     public static let shared = Device()
     
-    fileprivate let device = XCUIDevice.shared()
+    fileprivate let device = XCUIDevice.shared
     
     public var orientation: UIDeviceOrientation {
         get {
@@ -30,7 +30,7 @@ public final class Device {
     fileprivate init() {}
 
     @discardableResult
-    public func press(button: XCUIDeviceButton) -> Self {
+    public func press(button: XCUIDevice.Button) -> Self {
         self.device.press(button)
         return self
     }

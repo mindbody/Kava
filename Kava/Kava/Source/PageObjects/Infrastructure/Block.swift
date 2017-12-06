@@ -60,7 +60,10 @@ public extension Block {
     */
     @discardableResult
     public func wait(timeout: TimeInterval, predicate: NSPredicate) -> Self {
-        self.session.currentTest.wait(forPredicate: predicate, timeout: timeout)
+        let completed = self.session.currentTest.wait(forPredicate: predicate, timeout: timeout)
+        if (!completed) {
+            XCTFail("timeout")
+        }
         return self
     }
     

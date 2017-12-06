@@ -11,17 +11,13 @@ import XCTest
 
 public extension XCTestCase {
     
-    public func wait(forPredicate predicate: NSPredicate, evaluatedWith object: Any? = nil, timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) {
-        // If no object is provided, the expectation predicate still
-        // needs an object to be evaluated against, even if not used
-        let objectToEvaluate = object ?? self
-        
-        self.expectation(for: predicate, evaluatedWith: objectToEvaluate, handler: nil)
-        
-        self.waitForExpectations(timeout: timeout, handler: handler)
+    public func wait(forPredicate predicate: NSPredicate, evaluatedWith object: Any? = nil, timeout: TimeInterval) -> Bool {
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: object)
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
     }
     
-    public func waitForBlockToDisappear<T>(_ block: T, timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) where T:Block, T:AnyObject {
+    public func waitForBlockToDisappear<T>(_ block: T, timeout: TimeInterval) -> Bool where T:Block  {
         let blockExistsPredicate = NSPredicate { (evaluatedObject, bindings) -> Bool in
             guard let evaluatedBlock = evaluatedObject as? T else {
                 XCTFail()
@@ -30,10 +26,10 @@ public extension XCTestCase {
             return !evaluatedBlock.exists
         }
         
-        self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout, handler: handler)
+        return self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout)
     }
     
-    public func waitForBlockToExist<T>(_ block: T, withTimeout timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) where T:Block, T:AnyObject {
+    public func waitForBlockToExist<T>(_ block: T, withTimeout timeout: TimeInterval) -> Bool where T:Block  {
         let blockExistsPredicate = NSPredicate { (evaluatedObject, bindings) -> Bool in
             guard let evaluatedBlock = evaluatedObject as? T else {
                 XCTFail()
@@ -42,7 +38,7 @@ public extension XCTestCase {
             return evaluatedBlock.exists
         }
         
-        self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout, handler: handler)
+        return self.wait(forPredicate: blockExistsPredicate, evaluatedWith: block, timeout: timeout)
     }
     
 }
@@ -55,9 +51,9 @@ internal extension XCUIElement {
             return
         }
         
-        let deleteString = currentText.characters.map { _ in "\u{8}" }.joined(separator: "")
+        let deleteString = currentText.map { _ in "\u{8}" }.joined(separator: "")
         
-        if (deleteString.characters.count > 0) {
+        if (deleteString.count > 0) {
             self.typeText(deleteString)
         }
     }
